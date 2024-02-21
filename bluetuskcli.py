@@ -3,6 +3,7 @@
 from configparser import ConfigParser
 from atproto import Client
 from mastodon import Mastodon
+from time import sleep
 
 # Read config.ini file
 config_object = ConfigParser()
@@ -35,6 +36,7 @@ def masto():
         masto()
     mastodon = Mastodon(api_base_url=masto_inst, access_token=masto_token)
     mastodon.toot(post)
+    sleep(3)
     main()
 
 
@@ -53,6 +55,7 @@ def bsky():
     client.login(bsky_usr, bsky_pass)
 
     client.send_post(text=post)
+    sleep(3)
     main()
 
 
@@ -70,7 +73,7 @@ def crosspost():
     if char > bsky_limit:
         print('Character Limit Exceeded! Try Again...')
         crosspost()
-    main()
+    
 
     # make a text post in bluesky
     client = Client()
@@ -80,6 +83,8 @@ def crosspost():
     # post to mastodon
     mastodon = Mastodon(api_base_url=masto_inst, access_token=masto_token)
     mastodon.toot(post)
+    sleep(3)
+    main()
 
 
 # Main Menu
